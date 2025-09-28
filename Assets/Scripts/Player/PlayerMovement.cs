@@ -20,13 +20,23 @@ public class PlayerMovement : MonoBehaviour
     /// la fuerza
     /// </summary>
     private float intervaloTiempo;
+    /// <summary>
+    /// indica la velocidad aplicada en el movimiento lateral
+    /// </summary>
+    private float velocidadLateral;
     #endregion
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        fuerzaPorAplicar = new Vector3(0,0,10);
+        fuerzaPorAplicar = new Vector3(0,0,5f);
         tiempoDesdeUltimaFuerza = 0f;
         intervaloTiempo = 2f;
+        velocidadLateral = 2f;
+    }
+    void Update()
+    {
+        float direccion = Input.GetAxis("Horizontal");
+        transform.Translate(direccion*velocidadLateral*Time.deltaTime,0,0);
     }
     private void FixedUpdate()
     {
