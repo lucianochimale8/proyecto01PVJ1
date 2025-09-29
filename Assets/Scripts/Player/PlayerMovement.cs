@@ -21,13 +21,11 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private float intervaloTiempo;
     /// <summary>
-    /// indica la velocidad aplicada en el movimiento lateral
-    /// </summary>
-    private float velocidadLateral;
-    /// <summary>
     /// representa la estrategia de movimiento
     /// </summary>
+    
     private IMovementStrategy strategy;
+    private Player player;
     #endregion
 
     #region Ciclo de vida del script
@@ -37,12 +35,13 @@ public class PlayerMovement : MonoBehaviour
         fuerzaPorAplicar = new Vector3(0,0,5f);
         tiempoDesdeUltimaFuerza = 0f;
         intervaloTiempo = 2f;
-        velocidadLateral = 2f;
-        SetStrategy(new LateralMovement());
+
+        player = new Player(5f, 5f);
+        SetStrategy(new AceletareMovement());
     }
     void Update()
     {
-        strategy.Move(transform,velocidadLateral);
+        MovePlayer();
             
     }
     private void FixedUpdate()
@@ -59,6 +58,10 @@ public class PlayerMovement : MonoBehaviour
     public void SetStrategy(IMovementStrategy strategy)
     {
         this.strategy = strategy;
+    }
+    public void MovePlayer()
+    {
+        strategy.Move(transform, player);
     }
     #endregion
 }
