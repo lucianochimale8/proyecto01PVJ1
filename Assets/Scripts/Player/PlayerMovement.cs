@@ -24,7 +24,13 @@ public class PlayerMovement : MonoBehaviour
     /// indica la velocidad aplicada en el movimiento lateral
     /// </summary>
     private float velocidadLateral;
+    /// <summary>
+    /// representa la estrategia de movimiento
+    /// </summary>
+    private IMovementStrategy strategy;
     #endregion
+
+    #region Ciclo de vida del script
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,11 +38,12 @@ public class PlayerMovement : MonoBehaviour
         tiempoDesdeUltimaFuerza = 0f;
         intervaloTiempo = 2f;
         velocidadLateral = 2f;
+        SetStrategy(new LateralMovement());
     }
     void Update()
     {
-        float direccion = Input.GetAxis("Horizontal");
-        transform.Translate(direccion*velocidadLateral*Time.deltaTime,0,0);
+        strategy.Move(transform,velocidadLateral);
+            
     }
     private void FixedUpdate()
     {
@@ -47,4 +54,11 @@ public class PlayerMovement : MonoBehaviour
             tiempoDesdeUltimaFuerza = 0f;
         }
     }
+    #endregion
+    #region Logica de la estrategia
+    public void SetStrategy(IMovementStrategy strategy)
+    {
+        this.strategy = strategy;
+    }
+    #endregion
 }
