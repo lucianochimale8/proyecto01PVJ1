@@ -37,11 +37,11 @@ public class PlayerMovement : MonoBehaviour
         intervaloTiempo = 2f;
 
         player = new Player(5f, 5f);
-        SetStrategy(new AceletareMovement());
+        SetStrategy(new LateralMovement());
     }
     void Update()
     {
-        MovePlayer();
+        
             
     }
     private void FixedUpdate()
@@ -59,9 +59,9 @@ public class PlayerMovement : MonoBehaviour
     {
         this.strategy = strategy;
     }
-    public void MovePlayer()
+    public void MovePlayer(float input)
     {
-        strategy.Move(transform, player);
+        strategy.Move(transform, player, input);
     }
     #endregion
 }
